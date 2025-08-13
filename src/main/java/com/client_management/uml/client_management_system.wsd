@@ -1,0 +1,58 @@
+@startuml client_management_system
+
+'modelos'
+
+class User{
+    String name
+    String id
+    String userName
+    String password
+
+    getters()
+    setters()
+    constructor()
+}
+
+class ActionHistory{
+    String description
+    Long timeOfAction
+
+    ActionHistory()
+    getters()
+}
+
+enum Role{
+    ADMIN
+    STANDARD
+}
+
+'Repositorio' 
+class UserRepository{
+    createUser(): void
+    searchUser(): User
+    updateUser(): Boolean
+    deleteUser(): Boolean
+}
+
+'service'
+class UserService{
+    createUser(): void
+    searchUser(): User
+    updateUser(): Boolean
+    deleteUser(): Boolean
+}
+
+class Authentication{
+    login(): User
+}
+
+
+'relaciones'
+User --> Role: Role
+User "1" *-- "1..*" ActionHistory
+Authentication <-- User
+UserService --> User
+UserRepository *-- User
+UserRepository <-- UserService
+
+@enduml
