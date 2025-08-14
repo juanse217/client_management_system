@@ -11,6 +11,7 @@ class User{
     getters()
     setters()
     constructor()
+    addAction(): void
 }
 
 class ActionHistory{
@@ -28,31 +29,36 @@ enum Role{
 
 'Repositorio' 
 class UserRepository{
-    createUser(): void
-    searchUser(): User
-    updateUser(): Boolean
+    addUser(): boolean
+    findUserById(): User
+    findUserByUserName(): User
+    updateUserName(): Boolean
+    updateUserPassword(): Boolean
     deleteUser(): Boolean
 }
 
 'service'
 class UserService{
     createUser(): void
-    searchUser(): User
-    updateUser(): Boolean
-    deleteUser(): Boolean
+    searchUserById(): String
+    searchUserByUserName(): String
+    updateUserName(): void
+    updateUserPassword(): void
+    deleteUser(): void
 }
 
 class Authentication{
-    login(): User
+    login(): void
 }
 
 
 'relaciones'
 User --> Role: Role
-User "1" *-- "1..*" ActionHistory
-Authentication <-- User
-UserService --> User
-UserRepository *-- User
+User "1" *-- "1..100" ActionHistory
+Authentication -left-> UserService
+Authentication --> User
+UserService -right-> User
+UserRepository "1" *-- "1..50"User
 UserRepository <-- UserService
 
 @enduml
