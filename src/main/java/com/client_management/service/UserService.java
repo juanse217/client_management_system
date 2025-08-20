@@ -1,12 +1,14 @@
 package com.client_management.service;
 
 import com.client_management.model.ActionHistory;
+import com.client_management.model.Role;
 import com.client_management.model.User;
 import com.client_management.repositories.UserRepository;
 
 /**
  * this class contains the logic for working with the users
  */
+//TODO: Implementar metodo addAction. 
 public class UserService {
     private UserRepository repo; //necesitamos la referencia del repositorio para acceder a los datos
 
@@ -25,10 +27,14 @@ public class UserService {
      * Este metodo crea el usuario y hace el registro en actionhistory
      * @param user el usuario que se quiere creare en el sistema
      */
-    public void createUser(User user){
-        repo.addUser(user);
-        String desc = "Creation of " + user.getUserName();
-        user.addAction(new ActionHistory(desc, System.currentTimeMillis())); 
+    public void createUser(String name, String id, String userName, String password, Role role){
+
+        User userCreator = new User(name, id, userName, password, role);
+
+        repo.addUser(userCreator);
+        
+        String desc = "Creation of " + userCreator.getUserName();
+        userCreator.addAction(new ActionHistory(desc, System.currentTimeMillis())); 
         //TODO: Use LocalTime to have the current date. 
     }
 

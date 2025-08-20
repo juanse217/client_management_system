@@ -49,6 +49,7 @@ public class User {
         for (int i = 0; i < history.length; i++) {
             if(history[i] == null){
                 history[i] = action; 
+                return;
             }
         }
 
