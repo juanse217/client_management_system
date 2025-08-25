@@ -3,17 +3,19 @@ package com.client_management.app;
 import java.util.Scanner;
 
 import com.client_management.model.Role;
+import com.client_management.model.User;
 import com.client_management.repositories.UserRepository;
 import com.client_management.service.Authentication;
 import com.client_management.service.UserService;
 
 public class ManagementSystem {
     public static void main(String[] args) {
-        UserRepository repo = UserRepository.getInstance();
+        UserRepository repo = UserRepository.getInstance(); //Only one and shared instance. 
         int decision = 0; 
         Scanner sc = new Scanner(System.in);
         UserService userService = new UserService(repo);
         Authentication login = new Authentication(repo); 
+        User currentUser = null; 
 
         do {
 
@@ -23,14 +25,14 @@ public class ManagementSystem {
 
             switch (decision) {
                 case 1:
-                    System.out.println("Enter your UserName: ");
+                    System.out.println("You're logging in\nEnter your UserName: ");
                     String userName = sc.nextLine();
                     System.out.println("Enter your password: ");
                     String pw = sc.nextLine();
-                    login.login(userName, pw);
+                    currentUser = login.login(userName, pw);
                     break;
                 case 2:
-                    System.out.println("Enter your full name: ");
+                    System.out.println("You're creating a user\nEnter your full name: ");
                     String name = sc.nextLine();
                     System.out.println("Enter your id: ");
                     String id = sc.nextLine(); 
@@ -45,7 +47,13 @@ public class ManagementSystem {
                     break;
 
                 case 3:
-                    
+                    System.out.println("You're updating the user's name\nenter the new name");
+                    String newName = sc.nextLine();
+                    if(currentUser != null){
+                        userService.updateUserName(currentUser, newName);
+                    }else{
+                        System.out.println("The name couln't be updated, try logging in");
+                    }
                     break;
 
                 case 4:

@@ -11,18 +11,21 @@ public class Authentication {
         finder = repo;
     }
 
-    public void login(String userName, String password){
+    public User login(String userName, String password){
         User user = finder.findUserByUserName(userName);
         
         if(user != null){
             if(user.getPassword().equals(password)){
                 System.out.println("Successful login! Welcome");
+                return user; 
             }else{
                 System.out.println("The password is wrong");
             }
         }else{
             System.out.println("The user doesn't exist");
         }
+
+        return null;
     }
 
     
