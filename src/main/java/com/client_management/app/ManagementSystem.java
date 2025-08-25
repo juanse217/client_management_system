@@ -10,18 +10,18 @@ import com.client_management.service.UserService;
 
 public class ManagementSystem {
     public static void main(String[] args) {
-        UserRepository repo = UserRepository.getInstance(); //Only one and shared instance. 
-        int decision = 0; 
+        UserRepository repo = UserRepository.getInstance(); // Only one and shared instance.
+        int decision = 0;
         Scanner sc = new Scanner(System.in);
         UserService userService = new UserService(repo);
-        Authentication login = new Authentication(repo); 
-        User currentUser = null; 
+        Authentication login = new Authentication(repo);
+        User currentUser = null;
 
         do {
 
-            System.out.printf("What would you like to do?\nLogin: 1\nCreate new user: 2\nUpdate User Name: 3\nUpdate User Password: 4\nDelete User: 5,\nExit: 6\n");
+            System.out.printf(
+                    "What would you like to do?\nLogin: 1\nCreate new user: 2\nUpdate User Name: 3\nUpdate User Password: 4\nDelete User: 5,\nExit: 6\n");
             decision = Integer.parseInt(sc.nextLine());
-            
 
             switch (decision) {
                 case 1:
@@ -35,7 +35,7 @@ public class ManagementSystem {
                     System.out.println("You're creating a user\nEnter your full name: ");
                     String name = sc.nextLine();
                     System.out.println("Enter your id: ");
-                    String id = sc.nextLine(); 
+                    String id = sc.nextLine();
                     System.out.println("Enter your username: ");
                     String userNameCreation = sc.nextLine();
                     System.out.println("Enter your password: ");
@@ -47,17 +47,25 @@ public class ManagementSystem {
                     break;
 
                 case 3:
-                    System.out.println("You're updating the user's name\nenter the new name");
+                    System.out.println("Enter the new name");
                     String newName = sc.nextLine();
-                    if(currentUser != null){
-                        userService.updateUserName(currentUser, newName);
-                    }else{
-                        System.out.println("The name couln't be updated, try logging in");
-                    }
+
+                    userService.updateUserName(currentUser, newName);
+
                     break;
 
                 case 4:
+
+                    System.out.println("Enter the new password");
+                    String newPassword = sc.nextLine();
+
+                    userService.updateUserPassword(currentUser, newPassword);
+
+                    break;
+                case 5:
                     
+                    userService.deleteUser(currentUser);
+                    currentUser = null;
                     break;
 
                 default:
