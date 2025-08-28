@@ -72,13 +72,13 @@ public class UserService {
     public void SearchUserByUserName(String userName) {
         User user = repo.findUserByUserName(userName);
         if (user == null) {
-            if (user == null) {
-                System.err.println("ERROR: the user doesn't exsist");
-                return;
-            }
 
-            System.out.printf("Name: %s, ID: %s, UserName: %s", user.getName(), user.getId(), user.getUserName());
+            System.err.println("ERROR: the user doesn't exsist");
+            return;
         }
+
+        System.out.printf("Name: %s, ID: %s, UserName: %s", user.getName(), user.getId(), user.getUserName());
+
     }
 
     /**
@@ -125,18 +125,6 @@ public class UserService {
             }
         } else {
             System.err.println("ERROR: the user doesn't exist or you haven't logged in");
-            if (currentUser != null) {
-                System.out.println("You're updating the password for " + currentUser.getName());
-                boolean updated = repo.updateUserPassword(currentUser, newPasword);
-
-                if (updated) {
-                    System.out.println("Update succesful!");
-                } else {
-                    System.out.println("The password couldn't be updated");
-                }
-            } else {
-                System.err.println("ERROR: the user doesn't exist or you haven't logged in");
-            }
         }
 
     }
